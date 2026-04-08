@@ -3,1415 +3,1127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Edu Programs - 海外高校非学位项目库</title>
+    <title>全球留学项目库 - 海外高校非学位项目</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-card: #1a1a24;
-            --bg-hover: #252532;
-            --accent-primary: #6366f1;
-            --accent-secondary: #8b5cf6;
+            --bg-primary: #0a0a0f; --bg-secondary: #12121a; --bg-card: #1a1a24;
+            --bg-hover: #252532; --accent-primary: #6366f1; --accent-secondary: #8b5cf6;
             --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            --border-color: #2d2d3a;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.15);
+            --text-primary: #f8fafc; --text-secondary: #94a3b8; --text-muted: #64748b;
+            --border-color: #2d2d3a; --success: #10b981; --warning: #f59e0b; --danger: #ef4444;
+            --shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.5); --shadow-glow: 0 0 40px rgba(99,102,241,0.15);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; }
+        .bg-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;
+            background: radial-gradient(ellipse at 20% 20%, rgba(99,102,241,0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 80%, rgba(139,92,246,0.1) 0%, transparent 50%); }
+        nav { background: rgba(18,18,26,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); 
+              position: sticky; top: 0; z-index: 1000; padding: 1rem 0; }
+        .nav-container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; font-size: 1.5rem; font-weight: 700;
+                background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo i { font-size: 1.75rem; color: var(--accent-primary); -webkit-text-fill-color: initial; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .header { text-align: center; padding: 3rem 0; margin-bottom: 2rem; }
+        .header h1 { font-size: 3rem; font-weight: 700; margin-bottom: 1rem;
+                     background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+
+        /* 控制区 */
+        .controls-section { background: var(--bg-secondary); border: 1px solid var(--border-color); 
+                            border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: var(--shadow-lg); }
+        .search-bar { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .search-input-wrapper { flex: 1; min-width: 300px; position: relative; }
+        .search-input-wrapper i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        .search-input { width: 100%; padding: 0.875rem 1rem 0.875rem 2.75rem; background: var(--bg-card); 
+                        border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-primary);
+                        font-size: 0.9375rem; transition: all 0.3s ease; }
+        .search-input:focus { outline: none; border-color: var(--accent-primary); }
+        .compare-btn { padding: 0.875rem 1.5rem; background: var(--accent-gradient); border: none; border-radius: 12px; 
+                       color: white; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; 
+                       transition: all 0.3s ease; white-space: nowrap; }
+        .compare-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(99,102,241,0.4); }
+        .compare-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* 筛选 */
+        .filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .filter-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .filter-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+        .filter-select { padding: 0.625rem 0.875rem; background: var(--bg-card); border: 1px solid var(--border-color);
+                         border-radius: 8px; color: var(--text-primary); font-size: 0.875rem; cursor: pointer; }
+        .checkbox-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .checkbox-item { padding: 0.375rem 0.75rem; background: var(--bg-card); border: 1px solid var(--border-color);
+                         border-radius: 20px; font-size: 0.8125rem; cursor: pointer; transition: all 0.3s ease; user-select: none; }
+        .checkbox-item:hover { border-color: var(--accent-primary); }
+        .checkbox-item.active { background: var(--accent-primary); border-color: var(--accent-primary); color: white; }
+
+        /* 排序 */
+        .sort-bar { display: flex; justify-content: space-between; align-items: center; 
+                    padding-top: 1.5rem; border-top: 1px solid var(--border-color); flex-wrap: wrap; gap: 1rem; }
+        .results-count { color: var(--text-secondary); font-size: 0.875rem; }
+        .sort-options { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+        .sort-btn { padding: 0.5rem 1rem; background: transparent; border: 1px solid var(--border-color);
+                    border-radius: 8px; color: var(--text-secondary); font-size: 0.875rem; cursor: pointer; transition: all 0.3s ease; }
+        .sort-btn:hover, .sort-btn.active { background: var(--accent-primary); border-color: var(--accent-primary); color: white; }
+
+        /* 网格和卡片 */
+        .programs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 1.5rem; }
+        .program-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px;
+                        padding: 1.5rem; transition: all 0.3s ease; cursor: pointer; position: relative; overflow: hidden;
+                        display: flex; flex-direction: column; gap: 1rem; }
+        .program-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+                                background: var(--accent-gradient); transform: scaleX(0); transition: transform 0.3s ease; }
+        .program-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-glow); border-color: var(--accent-primary); }
+        .program-card:hover::before { transform: scaleX(1); }
+        .program-card.selected { border-color: var(--accent-primary); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(99,102,241,0.1) 100%); }
+
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; }
+        .university-badge { display: flex; align-items: center; gap: 0.75rem; }
+        .university-logo { width: 48px; height: 48px; background: var(--bg-hover); border-radius: 12px;
+                           display: flex; align-items: center; justify-content: center; font-weight: 700; 
+                           font-size: 1rem; color: var(--accent-primary); border: 1px solid var(--border-color); }
+        .university-info h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .university-meta { display: flex; gap: 0.75rem; align-items: center; font-size: 0.75rem; color: var(--text-muted); }
+        .qs-badge { background: rgba(99,102,241,0.2); color: var(--accent-primary); padding: 0.125rem 0.5rem; border-radius: 4px; font-weight: 600; }
+        .select-checkbox { width: 24px; height: 24px; border: 2px solid var(--border-color); border-radius: 6px;
+                           display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; color: transparent; }
+        .program-card.selected .select-checkbox { background: var(--accent-primary); border-color: var(--accent-primary); color: white; }
+
+        .program-title { font-size: 1.125rem; font-weight: 600; line-height: 1.4; }
+        .program-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tag { padding: 0.25rem 0.75rem; background: var(--bg-hover); border-radius: 20px; font-size: 0.75rem; 
+               font-weight: 500; color: var(--text-secondary); border: 1px solid var(--border-color); }
+        .tag.credit-yes { background: rgba(16,185,129,0.1); color: var(--success); }
+        .tag.lang-easy { background: rgba(16,185,129,0.1); color: var(--success); }
+        .tag.lang-medium { background: rgba(245,158,11,0.1); color: var(--warning); }
+        .tag.lang-hard { background: rgba(239,68,68,0.1); color: var(--danger); }
+        .tag.academic { background: rgba(139,92,246,0.1); color: var(--accent-secondary); }
+        .tag.course { background: rgba(59,130,246,0.1); color: #3b82f6; }
+        .tag.visa { background: rgba(54,162,235,0.1); color: #36a2eb; }
+        .tag.video { background: rgba(255,99,132,0.1); color: #ff6384; }
+
+        .card-details { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; padding: 1rem; 
+                        background: var(--bg-primary); border-radius: 12px; }
+        .detail-item { display: flex; flex-direction: column; gap: 0.25rem; }
+        .detail-label { font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .detail-value { font-size: 0.875rem; font-weight: 500; }
+        .detail-value.fee { color: var(--success); font-weight: 600; }
+        .detail-value.deadline { color: var(--warning); }
+        .detail-value.deadline.urgent { color: var(--danger); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+
+        .card-footer { display: flex; gap: 0.75rem; margin-top: auto; }
+        .btn { flex: 1; padding: 0.75rem; border-radius: 10px; font-size: 0.875rem; font-weight: 600; 
+               cursor: pointer; transition: all 0.3s ease; text-align: center; text-decoration: none;
+               display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border: none; }
+        .btn-primary { background: var(--accent-gradient); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(99,102,241,0.4); }
+        .btn-secondary { background: var(--bg-hover); color: var(--text-primary); border: 1px solid var(--border-color); }
+
+        /* 模态框 */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                         background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 2000;
+                         display: none; align-items: center; justify-content: center; padding: 2rem; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: var(--bg-secondary); border: 1px solid var(--border-color); 
+                         border-radius: 20px; width: 100%; max-width: 1200px; max-height: 90vh;
+                         overflow: hidden; display: flex; flex-direction: column; }
+        .modal-header { padding: 1.5rem 2rem; border-bottom: 1px solid var(--border-color); 
+                        display: flex; justify-content: space-between; align-items: center; }
+        .modal-close { width: 40px; height: 40px; border-radius: 10px; background: var(--bg-card); 
+                       border: 1px solid var(--border-color); color: var(--text-secondary); cursor: pointer; }
+        .modal-close:hover { background: var(--danger); color: white; }
+        .modal-body { overflow-x: auto; padding: 2rem; }
+        .comparison-table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        .comparison-table th, .comparison-table td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border-color); }
+        .comparison-table th { background: var(--bg-card); font-weight: 600; color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* 免责声明 */
+        .disclaimer { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2);
+                      border-radius: 12px; padding: 1.5rem; margin-top: 3rem; display: flex; gap: 1rem; }
+        .disclaimer i { color: var(--warning); font-size: 1.25rem; margin-top: 0.125rem; }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .programs-grid { grid-template-columns: 1fr; }
+            .filters { grid-template-columns: 1fr; }
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* 背景动画 */
-        .bg-gradient {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
-        }
-
-        /* 导航栏 */
-        nav {
-            background: rgba(18, 18, 26, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 1rem 0;
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .logo i {
-            font-size: 1.75rem;
-            -webkit-text-fill-color: initial;
-            color: var(--accent-primary);
-        }
-
-        .nav-stats {
-            display: flex;
-            gap: 2rem;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .nav-stats span {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-stats strong {
-            color: var(--text-primary);
-            font-size: 1.125rem;
-        }
-
-        /* 主容器 */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* 头部区域 */
-        .header {
-            text-align: center;
-            padding: 3rem 0;
-            margin-bottom: 2rem;
-        }
-
-        .header h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .header p {
-            font-size: 1.125rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* 搜索和筛选区域 */
-        .controls-section {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .search-bar {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .search-input-wrapper {
-            flex: 1;
-            min-width: 300px;
-            position: relative;
-        }
-
-        .search-input-wrapper i {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 0.875rem 1rem 0.875rem 2.75rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 0.9375rem;
-            transition: all 0.3s ease;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-
-        .search-input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .compare-btn {
-            padding: 0.875rem 1.5rem;
-            background: var(--accent-gradient);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .compare-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
-        }
-
-        .compare-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* 筛选器 */
-        .filters {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .filter-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-        }
-
-        .filter-select {
-            padding: 0.625rem 0.875rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .filter-select:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-        }
-
-        /* 排序栏 */
-        .sort-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1.5rem;
+        /* 社交媒体区块样式 */
+        .social-section {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            padding: 4rem 0;
+            margin-top: 3rem;
             border-top: 1px solid var(--border-color);
-            flex-wrap: wrap;
-            gap: 1rem;
         }
 
-        .results-count {
+        .social-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .social-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .social-header p {
             color: var(--text-secondary);
-            font-size: 0.875rem;
+            font-size: 1.125rem;
         }
 
-        .results-count strong {
-            color: var(--text-primary);
-        }
-
-        .sort-options {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .sort-label {
-            color: var(--text-muted);
-            font-size: 0.875rem;
-        }
-
-        .sort-btn {
-            padding: 0.5rem 1rem;
-            background: transparent;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.375rem;
-        }
-
-        .sort-btn:hover, .sort-btn.active {
-            background: var(--bg-hover);
-            border-color: var(--accent-primary);
-            color: var(--text-primary);
-        }
-
-        .sort-btn.active {
-            background: var(--accent-primary);
-            color: white;
-        }
-
-        /* 项目卡片网格 */
-        .programs-grid {
+        .social-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .program-card {
+        .social-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
             transition: all 0.3s ease;
-            cursor: pointer;
             position: relative;
             overflow: hidden;
         }
 
-        .program-card::before {
+        .social-card::before {
             content: '';
             position: absolute;
-            top: 0;
             left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--accent-gradient);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--platform-color);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .program-card:hover {
+        .social-card:hover {
             transform: translateY(-4px);
-            box-shadow: var(--shadow-glow);
-            border-color: var(--accent-primary);
+            border-color: var(--platform-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .program-card:hover::before {
-            transform: scaleX(1);
+        .social-card:hover::before {
+            opacity: 1;
         }
 
-        .program-card.selected {
-            border-color: var(--accent-primary);
-            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(99, 102, 241, 0.1) 100%);
-        }
+        /* 各平台主题色 */
+        .social-card.bilibili { --platform-color: #00A1D6; }
+        .social-card.xiaohongshu { --platform-color: #FF2442; }
+        .social-card.douyin { --platform-color: #000000; color: white; background: rgba(0, 0, 0, 0.8); }
+        .social-card.douyin .social-handle { color: white; }
+        .social-card.douyin .social-desc { color: rgba(255, 255, 255, 0.8); }
+        .social-card.wechat { --platform-color: #07C160; }
+        .social-card.channels { --platform-color: #FA9D3B; }
+        .social-card.personal-wechat { --platform-color: #07C160; }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-
-        .university-badge {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .university-logo {
-            width: 48px;
-            height: 48px;
-            background: var(--bg-hover);
+        .social-icon {
+            width: 56px;
+            height: 56px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 1.25rem;
-            color: var(--accent-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .university-info h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .university-info .country {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .select-checkbox {
-            width: 24px;
-            height: 24px;
-            border: 2px solid var(--border-color);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: transparent;
-        }
-
-        .program-card.selected .select-checkbox {
-            background: var(--accent-primary);
-            border-color: var(--accent-primary);
+            font-size: 1.75rem;
             color: white;
+            flex-shrink: 0;
+            background: var(--platform-color);
         }
 
-        .program-title {
+        .social-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .social-info h3 {
             font-size: 1.125rem;
             font-weight: 600;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-primary);
+        }
+
+        .social-handle {
+            font-size: 0.9375rem;
+            color: var(--platform-color);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            word-break: break-all;
+        }
+
+        .social-desc {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
             line-height: 1.4;
         }
 
-        .program-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .tag {
-            padding: 0.25rem 0.75rem;
-            background: var(--bg-hover);
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-        }
-
-        .tag.credit-yes {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-            border-color: rgba(16, 185, 129, 0.2);
-        }
-
-        .tag.season-summer {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warning);
-            border-color: rgba(245, 158, 11, 0.2);
-        }
-
-        .tag.season-winter {
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--accent-primary);
-            border-color: rgba(99, 102, 241, 0.2);
-        }
-
-        .card-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            background: var(--bg-primary);
-            border-radius: 12px;
-        }
-
-        .detail-item {
+        .qr-code {
             display: flex;
             flex-direction: column;
-            gap: 0.25rem;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
         }
 
-        .detail-label {
+        .qr-code img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            background: white;
+            padding: 4px;
+            object-fit: cover;
+            border: 2px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .social-card:hover .qr-code img {
+            transform: scale(1.05);
+            border-color: var(--platform-color);
+        }
+
+        .qr-label {
             font-size: 0.6875rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
-        .detail-value {
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-
-        .detail-value.fee {
-            color: var(--success);
-            font-weight: 600;
-        }
-
-        .detail-value.deadline {
-            color: var(--warning);
-        }
-
-        .card-footer {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 0.75rem;
-            border-radius: 10px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .contact-footer {
             text-align: center;
-            text-decoration: none;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .contact-footer p {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 0.5rem;
         }
 
-        .btn-primary {
-            background: var(--accent-gradient);
-            color: white;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-secondary {
-            background: var(--bg-hover);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-secondary:hover {
-            background: var(--border-color);
-        }
-
-        /* 对比模态框 */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
-            z-index: 2000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            width: 100%;
-            max-width: 1200px;
-            max-height: 90vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .modal-header {
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h2 {
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .modal-close {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .modal-close:hover {
-            background: var(--danger);
-            color: white;
-            border-color: var(--danger);
-        }
-
-        .modal-body {
-            overflow-x: auto;
-            padding: 2rem;
-        }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 800px;
-        }
-
-        .comparison-table th,
-        .comparison-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .comparison-table th {
-            background: var(--bg-card);
-            font-weight: 600;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            position: sticky;
-            top: 0;
-        }
-
-        .comparison-table td {
-            color: var(--text-primary);
-        }
-
-        .comparison-table tr:hover td {
-            background: var(--bg-hover);
-        }
-
-        .comparison-table .program-name {
-            font-weight: 600;
+        .contact-footer i {
             color: var(--accent-primary);
         }
 
-        /* 免责声明 */
-        .disclaimer {
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid rgba(245, 158, 11, 0.2);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-top: 3rem;
-            display: flex;
-            gap: 1rem;
-            align-items: flex-start;
-        }
-
-        .disclaimer i {
-            color: var(--warning);
-            font-size: 1.25rem;
-            margin-top: 0.125rem;
-        }
-
-        .disclaimer-content h4 {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-            color: var(--warning);
-        }
-
-        .disclaimer-content p {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* 空状态 */
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-secondary);
-        }
-
-        .empty-state i {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-
-        .empty-state h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        /* 响应式设计 */
+        /* 响应式调整 */
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .programs-grid {
+            .social-grid {
                 grid-template-columns: 1fr;
             }
 
-            .filters {
-                grid-template-columns: 1fr;
-            }
-
-            .search-bar {
+            .social-card {
                 flex-direction: column;
+                text-align: center;
             }
 
-            .search-input-wrapper {
-                min-width: 100%;
-            }
-
-            .nav-stats {
-                display: none;
-            }
-
-            .comparison-table {
-                font-size: 0.875rem;
+            .qr-code {
+                margin-top: 1rem;
             }
         }
 
-        /* 加载动画 */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+        @media (min-width: 769px) and (max-width: 1200px) {
+            .social-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .program-card {
-            animation: fadeIn 0.5s ease forwards;
-        }
-
-        /* 滚动条美化 */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--bg-primary);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--text-muted);
         }
     </style>
 </head>
 <body>
     <div class="bg-gradient"></div>
-
     <nav>
         <div class="nav-container">
-            <div class="logo">
-                <i class="fas fa-graduation-cap"></i>
-                <span>Global Edu Programs</span>
-            </div>
-            <div class="nav-stats">
-                <span><i class="fas fa-university"></i> <strong id="uni-count">0</strong> 所高校</span>
-                <span><i class="fas fa-book"></i> <strong id="program-count">0</strong> 个项目</span>
-                <span><i class="fas fa-globe"></i> <strong id="country-count">0</strong> 个国家</span>
-            </div>
+            <div class="logo"><i class="fas fa-graduation-cap"></i><span>Global Edu Programs</span></div>
         </div>
     </nav>
 
     <div class="container">
         <div class="header">
             <h1>海外高校非学位项目库</h1>
-            <p>探索全球顶尖大学的短期课程、暑期学校、交换项目等非学位教育机会。所有信息均链接至官方来源，确保准确性与时效性。</p>
+            <p>探索全球顶尖大学的短期课程、暑期学校、交换项目等非学位教育机会</p>
         </div>
 
         <div class="controls-section">
             <div class="search-bar">
                 <div class="search-input-wrapper">
                     <i class="fas fa-search"></i>
-                    <input type="text" class="search-input" id="searchInput" placeholder="搜索大学名称、项目名称或关键词...">
+                    <input type="text" class="search-input" id="searchInput" placeholder="搜索学校、项目名称...">
                 </div>
                 <button class="compare-btn" id="compareBtn" disabled onclick="openCompareModal()">
-                    <i class="fas fa-balance-scale"></i>
-                    对比选中项目 (<span id="selectedCount">0</span>)
+                    <i class="fas fa-balance-scale"></i>对比项目 (<span id="selectedCount">0</span>)
                 </button>
             </div>
 
             <div class="filters">
                 <div class="filter-group">
                     <label class="filter-label">国家/地区</label>
-                    <select class="filter-select" id="countryFilter">
-                        <option value="">全部国家</option>
-                    </select>
+                    <select class="filter-select" id="countryFilter"><option value="">全部国家</option></select>
                 </div>
                 <div class="filter-group">
-                    <label class="filter-label">学分认定</label>
+                    <label class="filter-label">项目期间</label>
+                    <div class="checkbox-group" id="periodFilter">
+                        <span class="checkbox-item" data-value="暑期">暑期</span>
+                        <span class="checkbox-item" data-value="寒假">寒假</span>
+                        <span class="checkbox-item" data-value="学期">学期</span>
+                        <span class="checkbox-item" data-value="学年">学年</span>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">学分</label>
                     <select class="filter-select" id="creditFilter">
-                        <option value="">全部</option>
-                        <option value="yes">可获得学分</option>
-                        <option value="no">无学分</option>
+                        <option value="">全部</option><option value="有">有学分</option><option value="无">无学分</option>
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label class="filter-label">项目时段</label>
-                    <select class="filter-select" id="seasonFilter">
-                        <option value="">全部时段</option>
-                        <option value="summer">暑期</option>
-                        <option value="winter">寒假</option>
-                        <option value="semester">学期交换</option>
-                        <option value="year">学年交换</option>
+                    <label class="filter-label">适用对象</label>
+                    <div class="checkbox-group" id="targetFilter">
+                        <span class="checkbox-item" data-value="高中及以下">高中及以下</span>
+                        <span class="checkbox-item" data-value="本科生">本科生</span>
+                        <span class="checkbox-item" data-value="硕士生">硕士生</span>
+                        <span class="checkbox-item" data-value="博士生">博士生</span>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">课程类型</label>
+                    <div class="checkbox-group" id="courseTypeFilter">
+                        <span class="checkbox-item" data-value="主题课程">主题课程</span>
+                        <span class="checkbox-item" data-value="语言课程">语言课程</span>
+                        <span class="checkbox-item" data-value="专业课程">专业课程</span>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">授课途径</label>
+                    <div class="checkbox-group" id="deliveryFilter">
+                        <span class="checkbox-item" data-value="线上">线上</span>
+                        <span class="checkbox-item" data-value="线下">线下</span>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">语言难度</label>
+                    <select class="filter-select" id="langLevelFilter">
+                        <option value="">全部</option><option value="无要求">无要求</option><option value="低">低</option>
+                        <option value="中">中</option><option value="高">高</option>
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label class="filter-label">费用范围</label>
+                    <label class="filter-label">语言考试</label>
+                    <select class="filter-select" id="langExamFilter">
+                        <option value="">全部</option><option value="托福">托福</option><option value="雅思">雅思</option>
+                        <option value="多邻国">多邻国</option><option value="CEFR">CEFR</option>
+                        <option value="CET-4">CET-4</option><option value="CET-6">CET-6</option><option value="无">无要求</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">费用范围（人民币）</label>
                     <select class="filter-select" id="feeFilter">
-                        <option value="">全部费用</option>
-                        <option value="0-5000">$5,000以下</option>
-                        <option value="5000-10000">$5,000 - $10,000</option>
-                        <option value="10000-20000">$10,000 - $20,000</option>
-                        <option value="20000+">$20,000以上</option>
+                        <option value="">全部</option><option value="0-10000">¥10,000以下</option>
+                        <option value="10000-30000">¥10,000-30,000</option><option value="30000-50000">¥30,000-50,000</option>
+                        <option value="50000+">¥50,000以上</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">住宿</label>
+                    <select class="filter-select" id="accommodationFilter">
+                        <option value="">全部</option><option value="包含">包含住宿</option>
+                        <option value="保证">保证住宿</option><option value="可申请">可申请学校住宿</option>
+                        <option value="自理">自行寻找住宿</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">截止日期</label>
+                    <select class="filter-select" id="deadlineFilter">
+                        <option value="">全部</option><option value="urgent">即将截止（<30天）</option>
+                        <option value="open">申请进行中</option>
                     </select>
                 </div>
             </div>
 
             <div class="sort-bar">
-                <div class="results-count">
-                    显示 <strong id="showingCount">0</strong> 个项目
-                </div>
+                <div class="results-count">显示 <strong id="showingCount">0</strong> 个项目</div>
                 <div class="sort-options">
-                    <span class="sort-label">排序方式：</span>
-                    <button class="sort-btn active" onclick="sortPrograms('default')">默认</button>
-                    <button class="sort-btn" onclick="sortPrograms('deadline')">
-                        <i class="fas fa-calendar"></i> 截止日期
-                    </button>
-                    <button class="sort-btn" onclick="sortPrograms('fee-asc')">
-                        <i class="fas fa-arrow-up"></i> 费用
-                    </button>
-                    <button class="sort-btn" onclick="sortPrograms('fee-desc')">
-                        <i class="fas fa-arrow-down"></i> 费用
-                    </button>
+                    <span class="sort-label">排序：</span>
+                    <button class="sort-btn active" onclick="sortPrograms('qs')">QS排名</button>
+                    <button class="sort-btn" onclick="sortPrograms('deadline')">截止日期</button>
+                    <button class="sort-btn" onclick="sortPrograms('start')">开始日期</button>
                 </div>
             </div>
         </div>
 
-        <div class="programs-grid" id="programsGrid">
-            <!-- 项目卡片将通过JavaScript动态生成 -->
-        </div>
+        <div class="programs-grid" id="programsGrid"></div>
 
         <div class="disclaimer">
             <i class="fas fa-exclamation-triangle"></i>
-            <div class="disclaimer-content">
-                <h4>免责声明与版权说明</h4>
-                <p>本平台仅提供海外高校非学位项目的信息聚合与索引服务，所有项目信息（包括但不限于项目名称、描述、费用、申请要求等）均整理自各高校官方网站公开渠道。我们尊重知识产权，不存储或转载任何受版权保护的材料。用户点击"查看官网"按钮后将直接跳转至项目官方页面，所有内容的版权归原高校所有。信息更新可能存在滞后，请以各高校官网最新发布为准。如有侵权问题，请联系我们及时删除相关链接。</p>
+            <div>
+                <h4>免责声明</h4>
+                <p style="font-size: 0.875rem; color: var(--text-secondary);">
+                    本平台仅提供海外高校非学位项目的信息聚合与索引服务，所有信息均整理自各高校官方网站。
+                    点击"查看官网"将直接跳转至项目官方页面，所有内容的版权归原高校所有。
+                </p>
             </div>
         </div>
+
+        <section class="social-section">
+            <div class="container">
+                <div class="social-header">
+                    <h2>关注我，获取更多留学资讯</h2>
+                    <p>全网同名，实时更新海外高校非学位项目信息</p>
+                </div>
+
+                <div class="social-grid">
+                    <!-- 哔哩哔哩 -->
+                    <a href="https://space.bilibili.com/your-bilibili-id" target="_blank" rel="noopener noreferrer" class="social-card bilibili" style="text-decoration: none;">
+                        <div class="social-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="social-info">
+                            <h3>哔哩哔哩</h3>
+                            <p class="social-handle">@7989海外学习</p>
+                            <p class="social-desc">视频讲解申请流程、项目测评</p>
+                        </div>
+                        <div class="qr-code">
+                            <img src="images/qrcode-bilibili.png" alt="哔哩哔哩二维码" id="qr-bilibili">
+                            <span class="qr-label">扫码关注</span>
+                        </div>
+                    </a>
+
+                    <!-- 小红书 -->
+                    <div class="social-card xiaohongshu">
+                        <div class="social-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="social-info">
+                            <h3>小红书</h3>
+                            <p class="social-handle">@7989海外学习</p>
+                            <p class="social-desc">图文攻略、经验分享、避坑指南</p>
+                        </div>
+                        <div class="qr-code">
+                            <img src="images/qrcode-xiaohongshu.png" alt="小红书二维码" id="qr-xiaohongshu">
+                            <span class="qr-label">扫码关注</span>
+                        </div>
+                    </div>
+
+                    <!-- 抖音 -->
+                    <div class="social-card douyin">
+                        <div class="social-icon">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <div class="social-info">
+                            <h3>抖音</h3>
+                            <p class="social-handle">@7989海外学习</p>
+                            <p class="social-desc">短视频快速了解项目亮点</p>
+                        </div>
+                        <div class="qr-code">
+                            <img src="images/qrcode-douyin.png" alt="抖音二维码" id="qr-douyin">
+                            <span class="qr-label">扫码关注</span>
+                        </div>
+                    </div>
+
+                    <!-- 微信公众号 -->
+                    <div class="social-card wechat">
+                        <div class="social-icon">
+                            <i class="fab fa-weixin"></i>
+                        </div>
+                        <div class="social-info">
+                            <h3>微信公众号</h3>
+                            <p class="social-handle">7989海外学习</p>
+                            <p class="social-desc">最全项目库、申请提醒、资料包</p>
+                        </div>
+                        <div class="qr-code">
+                            <img src="images/qrcode-wechat.png" alt="微信公众号二维码" id="qr-wechat">
+                            <span class="qr-label">扫码关注</span>
+                        </div>
+                    </div>
+
+                    <!-- 微信视频号 -->
+                    <div class="social-card channels">
+                        <div class="social-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="social-info">
+                            <h3>微信视频号</h3>
+                            <p class="social-handle">7989海外学习</p>
+                            <p class="social-desc">短视频+直播答疑，实时互动</p>
+                        </div>
+                        <div class="qr-code">
+                            <img src="images/qrcode-channels.png" alt="视频号二维码" id="qr-channels">
+                            <span class="qr-label">扫码关注</span>
+                        </div>
+                    </div>
+
+                    <!-- 个人微信 -->
+                    <div class="social-card personal-wechat">
+                        <div class="social-icon">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="social-info">
+                            <h3>个人微信</h3>
+                            <p class="social-handle">微信号：7989海外学习</p>
+                            <p class="social-desc">1对1咨询、进交流群、获取资料</p>
+                        </div>
+                        <div class="qr-code">
+                            <img src="images/qrcode-personal.png" alt="个人微信二维码" id="qr-personal">
+                            <span class="qr-label">扫码添加</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-footer">
+                    <p><i class="fas fa-envelope"></i> 商务合作请联系：<a href="mailto:contact@youyuan-yousi.com
+" style="color: var(--accent-primary); text-decoration: none;">contact@youyuan-yousi.com</a></p>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <!-- 对比模态框 -->
     <div class="modal-overlay" id="compareModal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2><i class="fas fa-balance-scale"></i> 项目对比</h2>
-                <button class="modal-close" onclick="closeCompareModal()">
-                    <i class="fas fa-times"></i>
-                </button>
+                <button class="modal-close" onclick="closeCompareModal()"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
-                <table class="comparison-table" id="comparisonTable">
-                    <!-- 对比表格将通过JavaScript动态生成 -->
-                </table>
+                <table class="comparison-table" id="comparisonTable"></table>
             </div>
         </div>
     </div>
 
     <script>
-        // 示例数据 - 你可以在这里添加更多项目
+        // ========================================
+        // 汇率配置（每100外币兑换的人民币）
+        // 添加新货币：在此添加 "货币代码: 汇率数值" 或 "中文名称: 汇率数值"
+        // ========================================
+        const exchangeRates = {
+            "USD": 6.90, "GBP": 9.15, "EUR": 7.98, "AUD": 4.79, "CAD": 4.97,
+            "JPY": 0.044, "KRW": 0.0047, "HKD": 0.88, "SGD": 5.37, "NZD": 3.95,
+            "CHF": 8.65, "SEK": 0.73, "DKK": 1.07, "CNY": 1.00,
+            "美元": 6.90, "英镑": 9.15, "欧元": 7.98, "澳元": 4.79, "加元": 4.97,
+            "日元": 0.044, "韩元": 0.0047, "港币": 0.88, "新加坡元": 5.37, "新西兰元": 3.95,
+            "瑞士法郎": 8.65, "瑞典克朗": 0.73, "丹麦克朗": 1.07, "人民币": 1.00
+        };
+
+        function convertToRMB(amount, currency) {
+            const rate = exchangeRates[currency];
+            return rate ? Math.round(amount * rate) : amount;
+        }
+
+        // ========================================
+        // 项目数据 - 在此处添加你的项目
+        // ========================================
         const programsData = [
-            {
-                id: 1,
-                university: "哈佛大学",
-                universityShort: "Harvard",
-                country: "美国",
-                countryCode: "US",
-                name: "Harvard Summer School",
-                type: "暑期学校",
-                credit: true,
-                season: "summer",
-                duration: "7周",
-                deadline: "2026-03-15",
-                fee: 11840,
-                language: "英语",
-                target: "本科生、研究生",
-                link: "https://summer.harvard.edu/"
-            },
-            {
-                id: 2,
-                university: "牛津大学",
-                universityShort: "Oxford",
-                country: "英国",
-                countryCode: "GB",
-                name: "Oxford Summer Courses",
-                type: "暑期课程",
-                credit: true,
-                season: "summer",
-                duration: "2-6周",
-                deadline: "2026-04-01",
-                fee: 6500,
-                language: "英语",
-                target: "高中生、本科生",
-                link: "https://www.oxford-royale.com/"
-            },
-            {
-                id: 3,
-                university: "新加坡国立大学",
-                universityShort: "NUS",
-                country: "新加坡",
-                countryCode: "SG",
-                name: "NUS Summer Programme",
-                type: "暑期项目",
-                credit: true,
-                season: "summer",
-                duration: "4周",
-                deadline: "2026-02-28",
-                fee: 4500,
-                language: "英语",
-                target: "本科生",
-                link: "https://www.nus.edu.sg/"
-            },
-            {
-                id: 4,
-                university: "东京大学",
-                universityShort: "UTokyo",
-                country: "日本",
-                countryCode: "JP",
-                name: "UTokyo Summer Session",
-                type: "暑期课程",
-                credit: true,
-                season: "summer",
-                duration: "3周",
-                deadline: "2026-03-01",
-                fee: 3200,
-                language: "英语/日语",
-                target: "本科生、研究生",
-                link: "https://www.u-tokyo.ac.jp/"
-            },
-            {
-                id: 5,
-                university: "苏黎世联邦理工学院",
-                universityShort: "ETH",
-                country: "瑞士",
-                countryCode: "CH",
-                name: "ETH Summer Research Program",
-                type: "科研实习",
-                credit: false,
-                season: "summer",
-                duration: "8-12周",
-                deadline: "2025-12-15",
-                fee: 0,
-                language: "英语",
-                target: "理工科本科生",
-                link: "https://inf.ethz.ch/"
-            },
-            {
-                id: 6,
-                university: "悉尼大学",
-                universityShort: "USyd",
-                country: "澳大利亚",
-                countryCode: "AU",
-                name: "USyd Winter School",
-                type: "寒假学校",
-                credit: true,
-                season: "winter",
-                duration: "3周",
-                deadline: "2026-05-01",
-                fee: 3800,
-                language: "英语",
-                target: "本科生",
-                link: "https://www.sydney.edu.au/"
-            },
-            {
-                id: 7,
-                university: "慕尼黑工业大学",
-                universityShort: "TUM",
-                country: "德国",
-                countryCode: "DE",
-                name: "TUM Winter School",
-                type: "冬季项目",
-                credit: true,
-                season: "winter",
-                duration: "2周",
-                deadline: "2025-11-30",
-                fee: 1200,
-                language: "英语",
-                target: "工程类学生",
-                link: "https://www.tum.de/"
-            },
-            {
-                id: 8,
-                university: "香港大学",
-                universityShort: "HKU",
-                country: "中国香港",
-                countryCode: "HK",
-                name: "HKU Summer Institute",
-                type: "暑期学院",
-                credit: true,
-                season: "summer",
-                duration: "2-4周",
-                deadline: "2026-03-31",
-                fee: 2800,
-                language: "英语",
-                target: "高中生、本科生",
-                link: "https://www.hku.hk/"
-            },
-            {
-                id: 9,
-                university: "多伦多大学",
-                universityShort: "UofT",
-                country: "加拿大",
-                countryCode: "CA",
-                name: "International Summer Program",
-                type: "暑期项目",
-                credit: true,
-                season: "summer",
-                duration: "4周",
-                deadline: "2026-03-20",
-                fee: 5200,
-                language: "英语",
-                target: "本科生",
-                link: "https://www.utoronto.ca/"
-            },
-            {
-                id: 10,
-                university: "代尔夫特理工大学",
-                universityShort: "TU Delft",
-                country: "荷兰",
-                countryCode: "NL",
-                name: "Semester Exchange Program",
-                type: "学期交换",
-                credit: true,
-                season: "semester",
-                duration: "一学期",
-                deadline: "2026-04-15",
-                fee: 0,
-                language: "英语",
-                target: "本科生、研究生",
-                link: "https://www.tudelft.nl/"
-            }
+    {
+    id: 1775647556100,
+    university: "帝国理工学院",
+    universityShort: "ICL",
+    qsRank: 2,
+    country: "英国",
+    schoolUrl: "https://www.imperial.ac.uk/",
+    name: "Revolutions in Biomedicine Summer School",
+    programUrl: "https://www.imperial.ac.uk/medicine/study/revolutions-in-biomedicine-summer-schools/",
+    period: "暑期",
+    durationWeeks: 2,
+    startDate: "2026-07-06",
+    deadline: "2026-05-29",
+    targetAudience: ["本科生"],
+    academicRequirement: "具有生物科学相关课程经历",
+    credit: "有学分",
+    langLevel: "中",
+    langExams: ["托福", "雅思"],
+    langRequirementDetail: "托福92小分20；雅思6.5小分6.0",
+    courseType: ["主题课程"],
+    delivery: ["线下"],
+    accommodation: "可申请学校住宿",
+    visa: ["访客类"],
+    feeAmount: 2600,
+    feeCurrency: "英镑",
+    exchangeRate: 915
+},
+{
+    id: 1775647556101,
+    university: "帝国理工学院",
+    universityShort: "ICL",
+    qsRank: 2,
+    country: "英国",
+    schoolUrl: "https://www.imperial.ac.uk/",
+    name: "Imperial Summer Schools",
+    programUrl: "https://www.imperial.ac.uk/continuing-professional-development/short-courses/summer-schools/summerschool/",
+    videoUrl: "https://www.bilibili.com/video/BV1hDqPBsERA/",
+    period: "暑期",
+    durationWeeks: 2,
+    startDate: "2026-07-20",
+    deadline: "招满即止",
+    deadlineAnytime: true,
+    targetAudience: ["本科生", "硕士生", "博士生"],
+    academicRequirement: "大二及以上；部分课程需要专业背景",
+    credit: "有学分",
+    langLevel: "中",
+    langExams: ["托福", "雅思"],
+    langRequirementDetail: "托福92小分20；雅思6.5小分6.0",
+    courseType: ["主题课程"],
+    delivery: ["线下"],
+    accommodation: "可申请学校住宿",
+    visa: ["访客类"],
+    feeAmount: 2950,
+    feeCurrency: "英镑",
+    exchangeRate: 915
+},
+{
+    id: 1775647556103,
+    university: "帝国理工学院",
+    universityShort: "ICL",
+    qsRank: 2,
+    country: "英国",
+    schoolUrl: "https://www.imperial.ac.uk/",
+    name: "Imperial Global Summer School",
+    programUrl: "https://www.imperial.ac.uk/be-inspired/global-summer-school/",
+    videoUrl: "https://www.bilibili.com/video/BV1pZiZBxEe1/",
+    period: "暑期",
+    durationWeeks: 2,
+    startDate: "2026-06-29",
+    startDates: ["2026-06-29", "2026-08-03"],
+    deadline: "招满即止",
+    deadlineAnytime: true,
+    targetAudience: ["高中及以下"],
+    academicRequirement: "16或17周岁；GPA3.2",
+    credit: "无学分",
+    langLevel: "中",
+    langExams: ["托福", "雅思", "多邻国"],
+    langRequirementDetail: "托福92小分20；雅思6.5小分6.0；多邻国115小分105",
+    courseType: ["主题课程"],
+    delivery: ["线下"],
+    accommodation: "包含住宿",
+    visa: ["访客类"],
+    feeAmount: 7695,
+    feeCurrency: "英镑",
+    exchangeRate: 915
+},
+{
+    id: 1775647556104,
+    university: "牛津大学",
+    universityShort: "Oxford",
+    qsRank: 4,
+    country: "英国",
+    schoolUrl: "https://www.ox.ac.uk",
+    name: "Oxford University Summer School for Adults",
+    programUrl: "https://lifelong-learning.ox.ac.uk/about/oussa",
+    videoUrl: "https://www.bilibili.com/video/BV16giQBPEpq/",
+    period: "暑期",
+    durationWeeks: [1, 2, 3, 4, 5, 6],
+    startDate: "2026-07-11",
+    startDates: ["2026-07-11", "2026-07-18", "2026-07-25", "2026-08-01", "2026-08-08", "2026-08-15"],
+    deadline: "2026-05-01",
+    targetAudience: ["本科生", "硕士生", "博士生"],
+    academicRequirement: "部分课程需要专业背景",
+    credit: "有学分",
+    langLevel: "高",
+    langExams: ["托福", "雅思"],
+    langRequirementDetail: "托福110（L22/R24/S25/W24）或雅思7.5（7.0）",
+    courseType: ["主题课程"],
+    delivery: ["线下"],
+    accommodation: "可申请学校住宿",
+    visa: ["访客类"],
+    feeAmount: 1475,
+    feeCurrency: "英镑",
+    exchangeRate: 915
+}
         ];
 
+        // 数据预处理
+        function preprocessData() {
+            programsData.forEach(p => {
+                p.feeRMB = convertToRMB(p.feeAmount, p.feeCurrency);
+                p.feeDisplay = `${p.feeCurrency} ${p.feeAmount.toLocaleString()} (≈¥${p.feeRMB.toLocaleString()})`;
+                if (p.durationWeeks && p.durationMonths) p.durationDisplay = `约${p.durationMonths}个月 (${p.durationWeeks}周)`;
+                else if (p.durationWeeks) p.durationDisplay = `约${p.durationWeeks}周`;
+                else if (p.durationMonths) p.durationDisplay = `约${p.durationMonths}个月`;
+                else p.durationDisplay = "待定";
+            });
+        }
+
+        // 初始预处理数据
+        preprocessData();
+
+        let originalFilteredPrograms = [...programsData];
         let filteredPrograms = [...programsData];
         let selectedPrograms = [];
-        let currentSort = 'default';
+        let currentSort = 'qs';
 
-        // 初始化
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', () => {
             populateFilters();
             renderPrograms();
-            updateStats();
+            setupListeners();
         });
 
-        // 填充筛选器选项
         function populateFilters() {
-            const countries = [...new Set(programsData.map(p => p.country))];
-            const countryFilter = document.getElementById('countryFilter');
-            countries.forEach(country => {
-                const option = document.createElement('option');
-                option.value = country;
-                option.textContent = country;
-                countryFilter.appendChild(option);
+            const countries = [...new Set(programsData.map(p => p.country))].sort();
+            const cf = document.getElementById('countryFilter');
+            countries.forEach(c => { const opt = document.createElement('option'); opt.value = c; opt.textContent = c; cf.appendChild(opt); });
+        }
+
+        function setupListeners() {
+            document.getElementById('searchInput').addEventListener('input', applyFilters);
+            ['countryFilter', 'creditFilter', 'langLevelFilter', 'langExamFilter', 'feeFilter', 'accommodationFilter', 'deadlineFilter']
+                .forEach(id => document.getElementById(id).addEventListener('change', applyFilters));
+            document.querySelectorAll('.checkbox-item').forEach(item => {
+                item.addEventListener('click', function() { this.classList.toggle('active'); applyFilters(); });
             });
         }
-
-        // 渲染项目卡片
-        function renderPrograms() {
-            const grid = document.getElementById('programsGrid');
-            grid.innerHTML = '';
-
-            if (filteredPrograms.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state" style="grid-column: 1/-1;">
-                        <i class="fas fa-search"></i>
-                        <h3>未找到符合条件的项目</h3>
-                        <p>请尝试调整筛选条件或搜索关键词</p>
-                    </div>
-                `;
-                return;
-            }
-
-            filteredPrograms.forEach((program, index) => {
-                const card = createProgramCard(program, index);
-                grid.appendChild(card);
-            });
-
-            document.getElementById('showingCount').textContent = filteredPrograms.length;
-        }
-
-        // 创建项目卡片
-        function createProgramCard(program, index) {
-            const card = document.createElement('div');
-            card.className = 'program-card';
-            card.style.animationDelay = `${index * 0.05}s`;
-            if (selectedPrograms.includes(program.id)) {
-                card.classList.add('selected');
-            }
-
-            const isSelected = selectedPrograms.includes(program.id);
-            const deadlineDate = new Date(program.deadline);
-            const today = new Date();
-            const daysLeft = Math.ceil((deadlineDate - today) / (1000 * 60 * 60 * 24));
-
-            let deadlineText = program.deadline;
-            let deadlineClass = '';
-            if (daysLeft < 0) {
-                deadlineText = '已截止';
-                deadlineClass = 'style="color: var(--danger)"';
-            } else if (daysLeft < 30) {
-                deadlineText = `${program.deadline} (剩${daysLeft}天)`;
-                deadlineClass = 'style="color: var(--warning)"';
-            }
-
-            card.innerHTML = `
-                <div class="card-header">
-                    <div class="university-badge">
-                        <div class="university-logo">${program.universityShort}</div>
-                        <div class="university-info">
-                            <h3>${program.university}</h3>
-                            <div class="country">
-                                <i class="fas fa-map-marker-alt"></i>
-                                ${program.country}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="select-checkbox" onclick="toggleSelection(${program.id}, event)">
-                        <i class="fas fa-check"></i>
-                    </div>
-                </div>
-
-                <div class="program-title">${program.name}</div>
-
-                <div class="program-tags">
-                    <span class="tag">${program.type}</span>
-                    <span class="tag ${program.credit ? 'credit-yes' : ''}">
-                        ${program.credit ? '✓ 可获学分' : '无学分'}
-                    </span>
-                    <span class="tag season-${program.season}">
-                        ${getSeasonText(program.season)}
-                    </span>
-                </div>
-
-                <div class="card-details">
-                    <div class="detail-item">
-                        <span class="detail-label">项目费用</span>
-                        <span class="detail-value fee">${program.fee === 0 ? '免费' : '$' + program.fee.toLocaleString()}</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">申请截止</span>
-                        <span class="detail-value deadline" ${deadlineClass}>${deadlineText}</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">项目时长</span>
-                        <span class="detail-value">${program.duration}</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">授课语言</span>
-                        <span class="detail-value">${program.language}</span>
-                    </div>
-                </div>
-
-                <div class="card-footer">
-                    <a href="${program.link}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" onclick="event.stopPropagation()">
-                        <i class="fas fa-external-link-alt"></i>
-                        查看官网
-                    </a>
-                    <button class="btn btn-secondary" onclick="showDetails(${program.id}); event.stopPropagation();">
-                        <i class="fas fa-info-circle"></i>
-                        详情
-                    </button>
-                </div>
-            `;
-
-            card.onclick = (e) => {
-                if (!e.target.closest('.btn') && !e.target.closest('.select-checkbox')) {
-                    toggleSelection(program.id, e);
-                }
-            };
-
-            return card;
-        }
-
-        function getSeasonText(season) {
-            const map = {
-                'summer': '暑期',
-                'winter': '寒假',
-                'semester': '学期',
-                'year': '学年'
-            };
-            return map[season] || season;
-        }
-
-        // 切换选中状态
-        function toggleSelection(id, event) {
-            event.stopPropagation();
-            const index = selectedPrograms.indexOf(id);
-
-            if (index > -1) {
-                selectedPrograms.splice(index, 1);
-            } else {
-                if (selectedPrograms.length >= 4) {
-                    alert('最多可同时对比4个项目');
-                    return;
-                }
-                selectedPrograms.push(id);
-            }
-
-            updateSelectionUI();
-        }
-
-        // 更新选中UI
-        function updateSelectionUI() {
-            document.getElementById('selectedCount').textContent = selectedPrograms.length;
-            document.getElementById('compareBtn').disabled = selectedPrograms.length < 2;
-
-            document.querySelectorAll('.program-card').forEach(card => {
-                const id = parseInt(card.querySelector('.select-checkbox').getAttribute('onclick').match(/\d+/)[0]);
-                if (selectedPrograms.includes(id)) {
-                    card.classList.add('selected');
-                } else {
-                    card.classList.remove('selected');
-                }
-            });
-        }
-
-        // 搜索功能
-        document.getElementById('searchInput').addEventListener('input', applyFilters);
-
-        // 筛选功能
-        document.getElementById('countryFilter').addEventListener('change', applyFilters);
-        document.getElementById('creditFilter').addEventListener('change', applyFilters);
-        document.getElementById('seasonFilter').addEventListener('change', applyFilters);
-        document.getElementById('feeFilter').addEventListener('change', applyFilters);
 
         function applyFilters() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const term = document.getElementById('searchInput').value.toLowerCase();
             const country = document.getElementById('countryFilter').value;
             const credit = document.getElementById('creditFilter').value;
-            const season = document.getElementById('seasonFilter').value;
+            const langLevel = document.getElementById('langLevelFilter').value;
+            const langExam = document.getElementById('langExamFilter').value;
             const feeRange = document.getElementById('feeFilter').value;
+            const acc = document.getElementById('accommodationFilter').value;
+            const dl = document.getElementById('deadlineFilter').value;
+            const periods = Array.from(document.querySelectorAll('#periodFilter .active')).map(el => el.dataset.value);
+            const targets = Array.from(document.querySelectorAll('#targetFilter .active')).map(el => el.dataset.value);
+            const courseTypes = Array.from(document.querySelectorAll('#courseTypeFilter .active')).map(el => el.dataset.value);
+            const delivery = Array.from(document.querySelectorAll('#deliveryFilter .active')).map(el => el.dataset.value);
 
-            filteredPrograms = programsData.filter(program => {
-                // 搜索
-                if (searchTerm && !program.name.toLowerCase().includes(searchTerm) && 
-                    !program.university.toLowerCase().includes(searchTerm) &&
-                    !program.country.toLowerCase().includes(searchTerm)) {
-                    return false;
+            originalFilteredPrograms = programsData.filter(p => {
+                if (term && !p.university.toLowerCase().includes(term) && !p.name.toLowerCase().includes(term)) return false;
+                if (country && p.country !== country) return false;
+                if (credit && p.credit !== credit) return false;
+                if (periods.length && !periods.includes(p.period)) return false;
+                if (targets.length && !targets.some(t => p.targetAudience.includes(t))) return false;
+                if (courseTypes.length && !courseTypes.some(ct => p.courseType && p.courseType.includes(ct))) return false;
+                if (delivery.length && !delivery.some(d => p.delivery.includes(d))) return false;
+                if (langLevel && p.langLevel !== langLevel) return false;
+                if (langExam) {
+                    if (langExam === "无" && p.langExams.length > 0) return false;
+                    if (langExam !== "无" && !p.langExams.includes(langExam)) return false;
                 }
-
-                // 国家筛选
-                if (country && program.country !== country) return false;
-
-                // 学分筛选
-                if (credit && (credit === 'yes') !== program.credit) return false;
-
-                // 时段筛选
-                if (season && program.season !== season) return false;
-
-                // 费用筛选
                 if (feeRange) {
-                    if (feeRange === '0-5000' && program.fee > 5000) return false;
-                    if (feeRange === '5000-10000' && (program.fee < 5000 || program.fee > 10000)) return false;
-                    if (feeRange === '10000-20000' && (program.fee < 10000 || program.fee > 20000)) return false;
-                    if (feeRange === '20000+' && program.fee < 20000) return false;
+                    const fee = p.feeRMB;
+                    if (feeRange === '0-10000' && fee >= 10000) return false;
+                    if (feeRange === '10000-30000' && (fee < 10000 || fee >= 30000)) return false;
+                    if (feeRange === '30000-50000' && (fee < 30000 || fee >= 50000)) return false;
+                    if (feeRange === '50000+' && fee < 50000) return false;
                 }
-
+                if (acc && p.accommodation !== acc) return false;
+                if (dl) {
+                    const days = Math.ceil((new Date(p.deadline) - new Date()) / (1000*60*60*24));
+                    if (dl === 'urgent' && days >= 30) return false;
+                    if (dl === 'open' && days < 0) return false;
+                }
                 return true;
             });
-
-            // 应用当前排序
             sortPrograms(currentSort, false);
             renderPrograms();
         }
 
-        // 排序功能
-        function sortPrograms(sortType, update = true) {
-            currentSort = sortType;
-
-            // 更新按钮状态
-            document.querySelectorAll('.sort-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('onclick').includes(sortType)) {
-                    btn.classList.add('active');
-                }
-            });
-
-            switch(sortType) {
-                case 'deadline':
-                    filteredPrograms.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
-                    break;
-                case 'fee-asc':
-                    filteredPrograms.sort((a, b) => a.fee - b.fee);
-                    break;
-                case 'fee-desc':
-                    filteredPrograms.sort((a, b) => b.fee - a.fee);
-                    break;
-                default:
-                    filteredPrograms.sort((a, b) => a.id - b.id);
+        function renderPrograms() {
+            const grid = document.getElementById('programsGrid');
+            grid.innerHTML = '';
+            if (!filteredPrograms.length) {
+                grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;text-align:center;padding:4rem;color:var(--text-secondary)"><i class="fas fa-search" style="font-size:3rem;margin-bottom:1rem;opacity:.5"></i><h3>未找到符合条件的项目</h3></div>';
+                return;
             }
+            
+            // 检查是否有项目被隐藏
+            let hiddenCount = 0;
+            if (currentSort === 'deadline') {
+                hiddenCount = originalFilteredPrograms.filter(p => {
+                    // 招满即止的项目不计算为隐藏
+                    if (p.deadlineAnytime || p.deadline === '招满即止') return false;
+                    
+                    // 检查是否所有截止日期都已超过
+                    const allDates = [p.deadline];
+                    if (Array.isArray(p.deadlines)) {
+                        allDates.push(...p.deadlines);
+                    }
+                    
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    
+                    return !allDates.some(dateStr => {
+                        const date = new Date(dateStr);
+                        date.setHours(0, 0, 0, 0);
+                        return date >= today;
+                    });
+                }).length;
+            } else if (currentSort === 'start') {
+                hiddenCount = originalFilteredPrograms.filter(p => {
+                    if (p.startAnytime || p.startDate === '随时就读') return false;
+                    return new Date(p.startDate) < new Date();
+                }).length;
+            }
+            
+            // 添加提示信息
+            if (hiddenCount > 0) {
+                const notice = document.createElement('div');
+                notice.style.cssText = 'grid-column:1/-1;text-align:center;padding:1rem;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:12px;margin-bottom:1rem;color:var(--warning);font-size:0.875rem;';
+                notice.innerHTML = `<i class="fas fa-info-circle"></i> 提示：${hiddenCount}个项目因日期已过期被隐藏`;
+                grid.appendChild(notice);
+            }
+            
+            filteredPrograms.forEach((p, i) => grid.appendChild(createCard(p, i)));
+            document.getElementById('showingCount').textContent = filteredPrograms.length;
+        }
 
+        function createCard(p, i) {
+            const card = document.createElement('div');
+            card.className = 'program-card';
+            if (selectedPrograms.includes(p.id)) card.classList.add('selected');
+            card.style.animation = `fadeIn 0.5s ease forwards ${i*0.05}s`;
+            const daysLeft = Math.ceil((new Date(p.deadline) - new Date()) / (1000*60*60*24));
+            const dlClass = daysLeft < 7 ? 'urgent' : '';
+            const dlText = daysLeft < 0 ? '已截止' : daysLeft < 30 ? `${p.deadline} (剩${daysLeft}天)` : p.deadline;
+
+            card.innerHTML = `
+                <div class="card-header">
+                    <div class="university-badge">
+                        <div class="university-logo">${p.universityShort}</div>
+                        <div class="university-info">
+                            <h3><a href="${p.schoolUrl}" target="_blank" rel="noopener noreferrer" style="color: var(--text-primary); text-decoration: none;">${p.university}</a></h3>
+                            <div class="university-meta">
+                                <span>${p.country}</span>
+                                <span class="qs-badge">QS ${p.qsRank}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="select-checkbox" onclick="toggleSelection(${p.id}, event)"><i class="fas fa-check"></i></div>
+                </div>
+                <div class="program-title">${p.name}</div>
+                <div class="program-tags">
+                    <span class="tag ${p.credit === '有' ? 'credit-yes' : ''}">${p.credit === '有' ? '✓ 有学分' : '无学分'}</span>
+                    <span class="tag">${p.period}</span>
+                    <span class="tag lang-${p.langLevel === '高' ? 'hard' : p.langLevel === '中' ? 'medium' : p.langLevel === '低' ? 'easy' : ''}">${p.langLevel === '无要求' ? '无语言要求' : '语言: ' + p.langLevel}</span>
+                    ${p.courseType && p.courseType.length > 0 ? p.courseType.map(ct => `<span class="tag course">${ct}</span>`).join('') : ''}
+                    ${p.videoUrl ? `<a href="${p.videoUrl}" target="_blank" rel="noopener noreferrer" class="tag video" style="text-decoration: none; cursor: pointer;"><i class="fas fa-play-circle"></i> 视频讲解</a>` : '<span class="tag video">视频: 敬请期待</span>'}
+                </div>
+                <div class="card-details">
+                    <div class="detail-item"><span class="detail-label">费用</span><span class="detail-value fee">${p.feeDisplay}</span></div>
+                    <div class="detail-item"><span class="detail-label">截止</span><span class="detail-value deadline ${dlClass}">${getClosestDate(p.deadline, p.deadlines, p.deadlineAnytime, true)}</span></div>
+                    <div class="detail-item"><span class="detail-label">开始</span><span class="detail-value">${getClosestDate(p.startDate, p.startDates, p.startAnytime)}</span></div>
+                    <div class="detail-item"><span class="detail-label">时长</span><span class="detail-value">${p.durationDisplay}</span></div>
+                    ${p.visa && p.visa.length > 0 ? `<div class="detail-item"><span class="detail-label">签证</span><span class="detail-value">${p.visa.join('、')}</span></div>` : ''}
+                    <div class="detail-item"><span class="detail-label">语言要求</span><span class="detail-value">${p.langRequirementDetail && p.langRequirementDetail.length > 0 ? p.langRequirementDetail : '无语言要求'}</span></div>
+                    <div class="detail-item"><span class="detail-label">适用对象</span><span class="detail-value">${p.targetAudience && p.targetAudience.length > 0 ? p.targetAudience.join('、') + (p.academicRequirement && p.academicRequirement !== '无特殊要求' ? '，' + p.academicRequirement : '') : '无特殊要求'}</span></div>
+                </div>
+                <div class="card-footer">
+                    <a href="${p.programUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" onclick="event.stopPropagation()">
+                        <i class="fas fa-external-link-alt"></i>查看官网
+                    </a>
+                    <button class="btn btn-secondary" onclick="showDetail(${p.id}); event.stopPropagation();">详情</button>
+                </div>
+            `;
+            // 移除卡片的点击勾选行为，只有点击复选框才会勾选对比
+            return card;
+        }
+
+        function toggleSelection(id, e) {
+            e.stopPropagation();
+            const idx = selectedPrograms.indexOf(id);
+            if (idx > -1) selectedPrograms.splice(idx, 1);
+            else if (selectedPrograms.length < 4) selectedPrograms.push(id);
+            else { alert('最多对比4个项目'); return; }
+            updateSelectionUI();
+        }
+
+        function updateSelectionUI() {
+            document.getElementById('selectedCount').textContent = selectedPrograms.length;
+            document.getElementById('compareBtn').disabled = selectedPrograms.length < 2;
+            document.querySelectorAll('.program-card').forEach(c => {
+                const id = parseInt(c.querySelector('.select-checkbox').getAttribute('onclick').match(/\d+/)[0]);
+                c.classList.toggle('selected', selectedPrograms.includes(id));
+            });
+        }
+
+        function sortPrograms(type, update = true) {
+            currentSort = type;
+            document.querySelectorAll('.sort-btn').forEach(b => b.classList.toggle('active', b.getAttribute('onclick').includes(type)));
+            
+            // 从原始过滤结果开始
+            filteredPrograms = [...originalFilteredPrograms];
+            
+            switch(type) {
+                case 'qs': 
+                    // 按QS排名排序，如果排名一样则按学校简称排序
+                    filteredPrograms.sort((a,b) => {
+                        if (a.qsRank !== b.qsRank) {
+                            return a.qsRank - b.qsRank;
+                        } else {
+                            return a.universityShort.localeCompare(b.universityShort);
+                        }
+                    });
+                    break;
+                case 'deadline': 
+                    // 按截止日期排序，并过滤掉已截止的项目
+                    filteredPrograms = filteredPrograms.filter(p => {
+                        // 如果是招满即止，保留
+                        if (p.deadlineAnytime || p.deadline === '招满即止') return true;
+                        
+                        // 检查是否有未来的截止日期
+                        const allDates = [p.deadline];
+                        if (Array.isArray(p.deadlines)) {
+                            allDates.push(...p.deadlines);
+                        }
+                        
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+                        
+                        return allDates.some(dateStr => {
+                            const date = new Date(dateStr);
+                            date.setHours(0, 0, 0, 0);
+                            return date >= today;
+                        });
+                    });
+                    
+                    // 按截止日期排序
+                    filteredPrograms.sort((a,b) => {
+                        // 招满即止的项目排在最后
+                        if (a.deadlineAnytime || a.deadline === '招满即止') return 1;
+                        if (b.deadlineAnytime || b.deadline === '招满即止') return -1;
+                        
+                        // 获取卡片中呈现的截止日期
+                        const aDeadline = getClosestDate(a.deadline, a.deadlines, a.deadlineAnytime, true);
+                        const bDeadline = getClosestDate(b.deadline, b.deadlines, b.deadlineAnytime, true);
+                        
+                        // 提取日期部分进行比较
+                        const aDateStr = aDeadline.replace(' (已逾期)', '');
+                        const bDateStr = bDeadline.replace(' (已逾期)', '');
+                        
+                        // 检查是否已逾期
+                        const aIsOverdue = aDeadline.includes('已逾期');
+                        const bIsOverdue = bDeadline.includes('已逾期');
+                        
+                        // 如果都是已逾期，按日期排序
+                        if (aIsOverdue && bIsOverdue) {
+                            return new Date(aDateStr) - new Date(bDateStr);
+                        }
+                        
+                        // 如果一个是已逾期，另一个不是，前者排在后面
+                        if (aIsOverdue) return 1;
+                        if (bIsOverdue) return -1;
+                        
+                        // 否则按日期排序
+                        return new Date(aDateStr) - new Date(bDateStr);
+                    });
+                    break;
+                case 'start': 
+                    // 按开始日期排序，并过滤掉已开始的项目
+                    filteredPrograms = filteredPrograms.filter(p => {
+                        if (p.startAnytime || p.startDate === '随时就读') return true;
+                        return new Date(p.startDate) >= new Date();
+                    });
+                    filteredPrograms.sort((a,b) => {
+                        if (a.startAnytime || a.startDate === '随时就读') return -1;
+                        if (b.startAnytime || b.startDate === '随时就读') return 1;
+                        return new Date(a.startDate) - new Date(b.startDate);
+                    });
+                    break;
+                default: 
+                    // 默认按QS排名排序，如果排名一样则按学校简称排序
+                    filteredPrograms.sort((a,b) => {
+                        if (a.qsRank !== b.qsRank) {
+                            return a.qsRank - b.qsRank;
+                        } else {
+                            return a.universityShort.localeCompare(b.universityShort);
+                        }
+                    });
+            }
+            
             if (update) renderPrograms();
         }
 
-        // 打开对比模态框
         function openCompareModal() {
             if (selectedPrograms.length < 2) return;
-
             const selected = programsData.filter(p => selectedPrograms.includes(p.id));
             const table = document.getElementById('comparisonTable');
-
             table.innerHTML = `
-                <thead>
-                    <tr>
-                        <th>对比项</th>
-                        ${selected.map(p => `<th>${p.university}<br><small>${p.name}</small></th>`).join('')}
-                    </tr>
-                </thead>
+                <thead><tr><th>对比项</th>${selected.map(p => `<th>${p.university}<br><small>${p.name}</small></th>`).join('')}</tr></thead>
                 <tbody>
-                    <tr>
-                        <td><strong>国家/地区</strong></td>
-                        ${selected.map(p => `<td>${p.country}</td>`).join('')}
-                    </tr>
-                    <tr>
-                        <td><strong>项目类型</strong></td>
-                        ${selected.map(p => `<td>${p.type}</td>`).join('')}
-                    </tr>
-                    <tr>
-                        <td><strong>学分认定</strong></td>
-                        ${selected.map(p => `<td>${p.credit ? '✅ 可获得学分' : '❌ 无学分'}</td>`).join('')}
-                    </tr>
-                    <tr>
-                        <td><strong>项目时段</strong></td>
-                        ${selected.map(p => `<td>${getSeasonText(p.season)}</td>`).join('')}
-                    </tr>
-                    <tr>
-                        <td><strong>项目时长</strong></td>
-                        ${selected.map(p => `<td>${p.duration}</td>`).join('')}
-                    </tr>
-                    <tr>
-                        <td><strong>申请截止</strong></td>
-                        ${selected.map(p => `<td>${p.deadline}</td>`).join('')}
-                    </tr>
-                    <tr>
-                        <td><strong>项目费用</strong></td>
-                        ${selected.map(p => `<td style="color: var(--success); font-weight: 600;">${p.fee === 0 ? '免费' : '$' + p.fee.toLocaleString()}</td>`).join('')}
-                    </tr>
-                    <tr>
-                        <td><strong>授课语言</strong></td>
-                        ${selected.map(p => `<td>${p.language}</td>`).join('')}
-                    </tr>
-                    <tr>
-                        <td><strong>适用对象</strong></td>
-                        ${selected.map(p => `<td>${p.target}</td>`).join('')}
-                    </tr>
-                    <tr>
-                        <td><strong>官方链接</strong></td>
-                        ${selected.map(p => `<td><a href="${p.link}" target="_blank" style="color: var(--accent-primary);">访问官网 ↗</a></td>`).join('')}
-                    </tr>
+                    <tr><td><strong>QS排名</strong></td>${selected.map(p => `<td>QS ${p.qsRank}</td>`).join('')}</tr>
+                    <tr><td><strong>国家</strong></td>${selected.map(p => `<td>${p.country}</td>`).join('')}</tr>
+                    <tr><td><strong>项目期间</strong></td>${selected.map(p => `<td>${p.period}</td>`).join('')}</tr>
+                    <tr><td><strong>时长</strong></td>${selected.map(p => `<td>${p.durationDisplay}</td>`).join('')}</tr>
+                    <tr><td><strong>学分</strong></td>${selected.map(p => `<td>${p.credit === '有' ? '✓ 有学分' : '无学分'}</td>`).join('')}</tr>
+                    <tr><td><strong>费用</strong></td>${selected.map(p => `<td style="color:var(--success);font-weight:600">${p.feeDisplay}</td>`).join('')}</tr>
+                    <tr><td><strong>申请截止</strong></td>${selected.map(p => `<td>${p.deadline}</td>`).join('')}</tr>
+                    <tr><td><strong>语言要求</strong></td>${selected.map(p => `<td>${p.langLevel} (${p.langExams.join('/')})</td>`).join('')}</tr>
+                    <tr><td><strong>住宿</strong></td>${selected.map(p => `<td>${p.accommodation}</td>`).join('')}</tr>
+                    <tr><td><strong>官网</strong></td>${selected.map(p => `<td><a href="${p.programUrl}" target="_blank" style="color:var(--accent-primary)">访问官网 ↗</a></td>`).join('')}</tr>
                 </tbody>
             `;
-
             document.getElementById('compareModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
         }
 
-        // 关闭对比模态框
         function closeCompareModal() {
             document.getElementById('compareModal').classList.remove('active');
-            document.body.style.overflow = '';
         }
 
-        // 点击模态框外部关闭
-        document.getElementById('compareModal').addEventListener('click', function(e) {
-            if (e.target === this) closeCompareModal();
-        });
-
-        // ESC键关闭
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeCompareModal();
-        });
-
-        // 显示详情（简单alert，可扩展为模态框）
-        function showDetails(id) {
-            const program = programsData.find(p => p.id === id);
-            alert(`项目详情：\n\n${program.name}\n${program.university}\n\n适合人群：${program.target}\n更多信息请访问官网查看。`);
+        function showDetail(id) {
+            const p = programsData.find(x => x.id === id);
+            alert(`项目详情\n\n${p.name}\n${p.university}\n\n适用对象：${p.targetAudience.join('、')} (${p.gradeRequirement})\n语言要求：${p.langRequirementDetail && p.langRequirementDetail.length > 0 ? p.langRequirementDetail : '无语言要求'}\n学术要求：${p.academicRequirement}\n\n更多详情请访问官网查看。`);
         }
 
-        // 更新统计数据
-        function updateStats() {
-            document.getElementById('uni-count').textContent = new Set(programsData.map(p => p.university)).size;
-            document.getElementById('program-count').textContent = programsData.length;
-            document.getElementById('country-count').textContent = new Set(programsData.map(p => p.country)).size;
+        document.getElementById('compareModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeCompareModal(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCompareModal(); });
+
+        function getClosestDate(mainDate, dateArray, anytime, isDeadline = false) {
+            if (!mainDate) return '无';
+            
+            // 处理招满即止或随时就读的情况
+            if (anytime || mainDate === '招满即止' || mainDate === '随时就读') {
+                return mainDate;
+            }
+            
+            // 收集所有日期
+            const allDates = [mainDate];
+            if (Array.isArray(dateArray)) {
+                allDates.push(...dateArray);
+            }
+            
+            // 过滤出未来的日期
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const futureDates = allDates.filter(dateStr => {
+                const date = new Date(dateStr);
+                date.setHours(0, 0, 0, 0);
+                return date >= today;
+            });
+            
+            // 如果有未来的日期，返回最近的一个
+            if (futureDates.length > 0) {
+                futureDates.sort((a, b) => new Date(a) - new Date(b));
+                const d = new Date(futureDates[0]);
+                return `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
+            }
+            
+            // 如果没有未来的日期且是截止日期，返回最近的过去的截止日期，并标记为已逾期
+            if (isDeadline) {
+                allDates.sort((a, b) => new Date(b) - new Date(a));
+                const d = new Date(allDates[0]);
+                return `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')} (已逾期)`;
+            }
+            
+            // 如果没有未来的日期，返回最新的一个
+            allDates.sort((a, b) => new Date(b) - new Date(a));
+            const d = new Date(allDates[0]);
+            return `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
         }
+
+
     </script>
 </body>
 </html>
